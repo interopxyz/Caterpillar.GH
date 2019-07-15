@@ -1,0 +1,211 @@
+﻿using System;
+using System.Collections.Generic;
+
+using Grasshopper.Kernel;
+using Rhino.Geometry;
+using System.Windows.Forms;
+using GH_IO.Serialization;
+
+namespace Caterpillar.GH
+{
+    public class CaterPillar_Base : GH_Component
+    {
+
+        public ComboBox inputs = new ComboBox();
+        public ComboBox outputs = new ComboBox();
+
+        public int inputIndex = 0;
+        public int outputIndex = 0;
+
+        private string[] systemNames = new string[] { "SI" };
+
+        /// <summary>
+        /// Initializes a new instance of the CaterPillar_Base class.
+        /// </summary>
+        public CaterPillar_Base()
+          : base("CaterPillar_Base", "Nickname",
+              "Description",
+              "Category", "Subcategory")
+        {
+            UpdateMessage();
+        }
+
+        public CaterPillar_Base(string Name, string Nickname, string Description, string Category, string Subcategory)
+  : base(Name, Nickname,
+      Description,
+      Category, Subcategory)
+        {
+            UpdateMessage();
+        }
+
+
+        /// <summary>
+        /// Set Exposure level for the component.
+        /// </summary>
+        public override GH_Exposure Exposure
+        {
+            get { return GH_Exposure.hidden; }
+        }
+
+
+        /// <summary>
+        /// Registers all the input parameters for this component.
+        /// </summary>
+        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        {
+
+        }
+
+        /// <summary>
+        /// Registers all the output parameters for this component.
+        /// </summary>
+        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        {
+
+        }
+
+        /// <summary>
+        /// This is the method that actually does the work.
+        /// </summary>
+        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        protected override void SolveInstance(IGH_DataAccess DA)
+        {
+        }
+
+
+        public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
+        {
+
+            TableLayoutPanel panelA = TablePanel("Units In", inputs);
+            TableLayoutPanel panelB = TablePanel("Units Out", outputs);
+
+            base.AppendAdditionalMenuItems(menu);
+
+            Menu_AppendSeparator(menu);
+            Menu_AppendCustomItem(menu, panelA);
+
+            Menu_AppendSeparator(menu);
+            Menu_AppendCustomItem(menu, panelB);
+        }
+
+
+        private TableLayoutPanel TablePanel(string Title, ComboBox box)
+        {
+            box.DropDownStyle = ComboBoxStyle.DropDownList;
+            box.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+
+            Label label = new Label();
+            label.Text = Title;
+            label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+            TableLayoutPanel panel = new TableLayoutPanel();
+            panel.BackColor = System.Drawing.Color.Transparent;
+            panel.Height = 25;
+            panel.ColumnCount = 2;
+            panel.RowCount = 1;
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65));
+            panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35));
+            panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 25));
+
+            panel.Controls.Add(label, 1, 0);
+            panel.Controls.Add(box, 0, 0);
+
+            return panel;
+        }
+
+        public void SetMenuBoxes(string[] values)
+        {
+            systemNames = values;
+
+            foreach (string val in values)
+            {
+                inputs.Items.Add(val);
+                outputs.Items.Add(val);
+            }
+            
+            inputs.SelectionChangeCommitted -= (o, e) => { SetInputIndex(); };
+            inputs.SelectionChangeCommitted += (o, e) => { SetInputIndex(); };
+
+            inputs.SelectedIndex = inputIndex;
+            outputs.SelectedIndex = outputIndex;
+
+        }
+
+        private void SetInputIndex()
+        {
+            inputIndex = inputs.SelectedIndex;
+            UpdateMessage();
+            ExpireSolution(true);
+        }
+
+        private void SetOutputIndex()
+        {
+            outputIndex = outputs.SelectedIndex;
+            UpdateMessage();
+            ExpireSolution(true);
+        }
+
+        protected virtual void SetInputOptions()
+        {
+
+        }
+
+        protected virtual void SetOutputOptions()
+        {
+
+        }
+
+        /// <summary>
+        /// Adds to the default serialization method to save the current child status so it persists on copy/paste and save/reopen.
+        /// </summary>
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32("indexIn", inputIndex);
+            writer.SetInt32("indexOut", outputIndex);
+
+            return base.Write(writer);
+        }
+
+        /// <summary>
+        /// Adds to the default deserialization method to retrieve the saved child status so it persists on copy/paste and save/reopen.
+        /// </summary>
+        public override bool Read(GH_IReader reader)
+        {
+            inputIndex = reader.GetInt32("indexIn");
+            outputIndex = reader.GetInt32("indexOut");
+
+            inputs.SelectedIndex = inputIndex;
+            outputs.SelectedIndex = outputIndex;
+            UpdateMessage();
+
+            return base.Read(reader);
+        }
+
+        private void UpdateMessage()
+        {
+
+            Message = systemNames[inputIndex]+" to "+systemNames[outputIndex];
+        }
+
+        /// <summary>
+        /// Provides an Icon for the component.
+        /// </summary>
+        protected override System.Drawing.Bitmap Icon
+        {
+            get
+            {
+                //You can add image files to your project resources and access them like this:
+                // return Resources.IconForThisComponent;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the unique ID for this component. Do not change this ID after release.
+        /// </summary>
+        public override Guid ComponentGuid
+        {
+            get { return new Guid("b0a75ec1-6b1c-4cb2-92a4-fc9e6317413b"); }
+        }
+    }
+}
