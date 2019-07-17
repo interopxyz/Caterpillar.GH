@@ -5,19 +5,23 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Windows.Forms;
 using GH_IO.Serialization;
+using System.Reflection;
 
 namespace Caterpillar.GH
 {
     public class CaterPillar_Base : GH_Component
     {
 
-        public ComboBox inputs = new ComboBox();
-        public ComboBox outputs = new ComboBox();
+        protected ComboBox inputs = new ComboBox();
+        protected ComboBox outputs = new ComboBox();
 
-        public int inputIndex = 0;
-        public int outputIndex = 0;
+        protected int inputIndex = 0;
+        protected int outputIndex = 0;
 
-        private string[] systemNames = new string[] { "SI" };
+        protected List<Unit> UnitsIn = new List<Unit>();
+        protected List<Unit> UnitsOut = new List<Unit>();
+
+        protected string[] systemNames = new string[] { "SI" };
 
         /// <summary>
         /// Initializes a new instance of the CaterPillar_Base class.
@@ -70,6 +74,7 @@ namespace Caterpillar.GH
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+
         }
 
 
@@ -88,6 +93,20 @@ namespace Caterpillar.GH
             Menu_AppendCustomItem(menu, panelB);
         }
 
+        protected List<Unit> GetUnits(Type type)
+        {
+            List<Unit> results = new List<Unit>();
+
+            var flags = BindingFlags.Public | BindingFlags.Static;
+            MemberInfo[] members = type.GetProperties(flags);
+            foreach (MemberInfo mi in members)
+            {
+
+                Unit obj = (Unit)(((PropertyInfo)mi).GetValue(this));
+                results.Add(obj);
+            }
+            return results;
+        }
 
         private TableLayoutPanel TablePanel(string Title, ComboBox box)
         {
@@ -134,6 +153,7 @@ namespace Caterpillar.GH
         private void SetInputIndex()
         {
             inputIndex = inputs.SelectedIndex;
+            SetInputOptions();
             UpdateMessage();
             ExpireSolution(true);
         }
@@ -141,6 +161,7 @@ namespace Caterpillar.GH
         private void SetOutputIndex()
         {
             outputIndex = outputs.SelectedIndex;
+            SetOutputOptions();
             UpdateMessage();
             ExpireSolution(true);
         }
@@ -176,8 +197,12 @@ namespace Caterpillar.GH
 
             inputs.SelectedIndex = inputIndex;
             outputs.SelectedIndex = outputIndex;
-            UpdateMessage();
 
+            SetInputOptions();
+            SetOutputOptions();
+
+            UpdateMessage();
+            ExpireSolution(true);
             return base.Read(reader);
         }
 

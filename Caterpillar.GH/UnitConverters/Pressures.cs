@@ -12,16 +12,16 @@ using System.Diagnostics;
 
 namespace Caterpillar.GH.UnitConverters
 {
-    public class Lengths : CaterPillar_Base
+    public class Pressures : CaterPillar_Base
     {
 
         /// <summary>
         /// Initializes a new instance of the Lengths class.
         /// </summary>
-        public Lengths()
-          : base("Units of Length Conversion", "Length", "Scales a Length value from a source unit to a target unit", "Maths", "Units")
+        public Pressures()
+          : base("Units of Pressure Conversion", "Pressures", "Scales a Pressure value from a source unit to a target unit", "Maths", "Units")
         {
-            SetMenuBoxes(new string[] { "SI", "Imperial", "UK", "Nautical", "Astronomical", "Survey","Typography" });
+            SetMenuBoxes(new string[] { "SI Bars", "SI Pascals", "SI Torrs", "Imperial", "Metric", "Common" });
         }
 
         protected List<Unit> GetUnitType(int index)
@@ -30,25 +30,22 @@ namespace Caterpillar.GH.UnitConverters
             switch (systemNames[index])
             {
                 default:
-                    units = GetUnits(typeof(Caterpillar.Lengths.SI));
+                    units = GetUnits(typeof(Caterpillar.Pressures.SI.Bars));
+                    break;
+                case "SI Pascals":
+                    units = GetUnits(typeof(Caterpillar.Pressures.SI.Pascals));
+                    break;
+                case "SI Torrs":
+                    units = GetUnits(typeof(Caterpillar.Pressures.SI.Torrs));
                     break;
                 case "Imperial":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Imperial));
+                    units = GetUnits(typeof(Caterpillar.Pressures.Imperial));
                     break;
-                case "UK":
-                    units = GetUnits(typeof(Caterpillar.Lengths.UK));
+                case "Metric":
+                    units = GetUnits(typeof(Caterpillar.Pressures.Metric));
                     break;
-                case "Nautical":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Nautical));
-                    break;
-                case "Astronomical":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Astronomical));
-                    break;
-                case "Survey":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Survey));
-                    break;
-                case "Typography":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Typographic));
+                case "Common":
+                    units = GetUnits(typeof(Caterpillar.Pressures.Common));
                     break;
             }
             return units;
@@ -122,7 +119,7 @@ namespace Caterpillar.GH.UnitConverters
         protected override void SetOutputOptions()
         {
             base.SetOutputOptions();
-            
+
             UnitsOut = GetUnitType(outputIndex);
 
             Param_Integer paramOut = (Param_Integer)Params.Input[2];
@@ -144,7 +141,7 @@ namespace Caterpillar.GH.UnitConverters
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.Length24;
+                return Properties.Resources.Pressure24;
             }
         }
 
@@ -153,7 +150,7 @@ namespace Caterpillar.GH.UnitConverters
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("60ce550d-c24a-459e-b595-18e4761d482d"); }
+            get { return new Guid("7af9aa6c-ebb5-4fab-aed8-d7b146c42c53"); }
         }
     }
 }

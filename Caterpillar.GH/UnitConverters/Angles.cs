@@ -12,16 +12,16 @@ using System.Diagnostics;
 
 namespace Caterpillar.GH.UnitConverters
 {
-    public class Lengths : CaterPillar_Base
+    public class Angles : CaterPillar_Base
     {
 
         /// <summary>
         /// Initializes a new instance of the Lengths class.
         /// </summary>
-        public Lengths()
-          : base("Units of Length Conversion", "Length", "Scales a Length value from a source unit to a target unit", "Maths", "Units")
+        public Angles()
+          : base("Angular Unit Conversion", "Angles", "Scales a Angle value from a source unit to a target unit", "Maths", "Units")
         {
-            SetMenuBoxes(new string[] { "SI", "Imperial", "UK", "Nautical", "Astronomical", "Survey","Typography" });
+            SetMenuBoxes(new string[] { "Common", "Chronological" });
         }
 
         protected List<Unit> GetUnitType(int index)
@@ -30,25 +30,10 @@ namespace Caterpillar.GH.UnitConverters
             switch (systemNames[index])
             {
                 default:
-                    units = GetUnits(typeof(Caterpillar.Lengths.SI));
+                    units = GetUnits(typeof(Caterpillar.Angles.Common));
                     break;
-                case "Imperial":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Imperial));
-                    break;
-                case "UK":
-                    units = GetUnits(typeof(Caterpillar.Lengths.UK));
-                    break;
-                case "Nautical":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Nautical));
-                    break;
-                case "Astronomical":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Astronomical));
-                    break;
-                case "Survey":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Survey));
-                    break;
-                case "Typography":
-                    units = GetUnits(typeof(Caterpillar.Lengths.Typographic));
+                case "Chronological":
+                    units = GetUnits(typeof(Caterpillar.Angles.Chronological));
                     break;
             }
             return units;
@@ -122,7 +107,7 @@ namespace Caterpillar.GH.UnitConverters
         protected override void SetOutputOptions()
         {
             base.SetOutputOptions();
-            
+
             UnitsOut = GetUnitType(outputIndex);
 
             Param_Integer paramOut = (Param_Integer)Params.Input[2];
@@ -144,7 +129,7 @@ namespace Caterpillar.GH.UnitConverters
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.Length24;
+                return Properties.Resources.Angle24;
             }
         }
 
@@ -153,7 +138,7 @@ namespace Caterpillar.GH.UnitConverters
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("60ce550d-c24a-459e-b595-18e4761d482d"); }
+            get { return new Guid("b0625057-af59-408a-93b3-61fc7a15ed29"); }
         }
     }
 }

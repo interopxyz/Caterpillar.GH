@@ -60,13 +60,67 @@
     <Compile Include="Caterpillar.GHInfo.cs" />
     <Compile Include="CaterPillar_Base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UnitConverters\Angles.cs" />
+    <Compile Include="UnitConverters\Areas.cs" />
+    <Compile Include="UnitConverters\Energies.cs" />
+    <Compile Include="UnitConverters\Forces.cs" />
     <Compile Include="UnitConverters\Lengths.cs" />
+    <Compile Include="UnitConverters\Masses.cs" />
+    <Compile Include="UnitConverters\Pressures.cs" />
+    <Compile Include="UnitConverters\Speeds.cs" />
+    <Compile Include="UnitConverters\Temperatures.cs" />
+    <Compile Include="UnitConverters\Times.cs" />
+    <Compile Include="UnitConverters\Volumes.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Caterpillar\Caterpillar\Caterpillar.csproj">
       <Project>{1a4ec644-e4e6-4289-8e28-7f06ae800109}</Project>
       <Name>Caterpillar</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Volume24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Time24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Angle24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Area24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Force24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Length24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mass24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Power24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pressure24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Speed24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Temperature24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
