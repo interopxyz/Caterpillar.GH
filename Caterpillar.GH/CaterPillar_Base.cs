@@ -6,6 +6,7 @@ using Rhino.Geometry;
 using System.Windows.Forms;
 using GH_IO.Serialization;
 using System.Reflection;
+using System.Globalization;
 
 namespace Caterpillar.GH
 {
@@ -21,7 +22,10 @@ namespace Caterpillar.GH
         protected List<Unit> UnitsIn = new List<Unit>();
         protected List<Unit> UnitsOut = new List<Unit>();
 
-        protected string[] systemNames = new string[] { "SI" };
+        protected string[] systemNames = new string[] { "Rhino" };
+
+        protected int inVal = 0;
+        protected int outVal = 0;
 
         /// <summary>
         /// Initializes a new instance of the CaterPillar_Base class.
@@ -77,6 +81,14 @@ namespace Caterpillar.GH
 
         }
 
+        public string ConvertUnits(double value, int sigDigits = 36)
+        {
+            double outputValue = value * UnitsIn[inVal].Factor / UnitsOut[outVal].Factor;
+            string output = outputValue.ToString("F"+ sigDigits.ToString(), CultureInfo.CurrentCulture);
+            output = output.TrimEnd('0');
+            output = output + "0";
+            return output;
+        }
 
         public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
         {
@@ -145,9 +157,13 @@ namespace Caterpillar.GH
             inputs.SelectionChangeCommitted -= (o, e) => { SetInputIndex(); };
             inputs.SelectionChangeCommitted += (o, e) => { SetInputIndex(); };
 
+            outputs.SelectionChangeCommitted -= (o, e) => { SetOutputIndex(); };
+            outputs.SelectionChangeCommitted += (o, e) => { SetOutputIndex(); };
+
             inputs.SelectedIndex = inputIndex;
             outputs.SelectedIndex = outputIndex;
 
+            UpdateMessage();
         }
 
         private void SetInputIndex()
@@ -209,7 +225,7 @@ namespace Caterpillar.GH
         private void UpdateMessage()
         {
 
-            Message = systemNames[inputIndex]+" to "+systemNames[outputIndex];
+            Message = systemNames[inputIndex] + " to "+Environment.NewLine+systemNames[outputIndex];
         }
 
         /// <summary>

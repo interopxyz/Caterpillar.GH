@@ -9,6 +9,7 @@ using System.Linq;
 using Grasshopper.Kernel.Parameters;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Caterpillar.GH.UnitConverters
 {
@@ -21,7 +22,7 @@ namespace Caterpillar.GH.UnitConverters
         public Lengths()
           : base("Units of Length Conversion", "Length", "Scales a Length value from a source unit to a target unit", "Maths", "Units")
         {
-            SetMenuBoxes(new string[] { "SI", "Imperial", "UK", "Nautical", "Astronomical", "Survey","Typography" });
+            SetMenuBoxes(new string[] { "Rhino", "SI", "Imperial", "UK", "Nautical", "Astronomical", "Survey","Typography" });
         }
 
         protected List<Unit> GetUnitType(int index)
@@ -82,7 +83,7 @@ namespace Caterpillar.GH.UnitConverters
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddNumberParameter("Result", "R", "The converted value", GH_ParamAccess.item);
+            pManager.AddTextParameter("Result", "R", "The converted value", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -92,15 +93,11 @@ namespace Caterpillar.GH.UnitConverters
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             double inputValue = 1.0;
-            int inVal = 0;
-            int outVal = 0;
             if (!DA.GetData(0, ref inputValue)) return;
             if (!DA.GetData(1, ref inVal)) return;
             if (!DA.GetData(2, ref outVal)) return;
 
-            double outputValue = inputValue * UnitsIn[inVal].Factor / UnitsOut[outVal].Factor;
-
-            DA.SetData(0, outputValue);
+            DA.SetData(0, ConvertUnits(inputValue));
         }
 
         protected override void SetInputOptions()

@@ -80,15 +80,11 @@ namespace Caterpillar.GH.UnitConverters
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             double inputValue = 1.0;
-            int inVal = 0;
-            int outVal = 0;
             if (!DA.GetData(0, ref inputValue)) return;
             if (!DA.GetData(1, ref inVal)) return;
             if (!DA.GetData(2, ref outVal)) return;
 
-            double outputValue = inputValue * UnitsIn[inVal].Factor / UnitsOut[outVal].Factor;
-
-            DA.SetData(0, outputValue);
+            DA.SetData(0, ConvertUnits(inputValue));
         }
 
         protected override void SetInputOptions()
