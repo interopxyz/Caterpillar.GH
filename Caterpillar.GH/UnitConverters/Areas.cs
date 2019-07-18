@@ -21,7 +21,7 @@ namespace Caterpillar.GH.UnitConverters
         public Areas()
           : base("Units of Area Conversion", "Areas", "Scales a Area value from a source unit to a target unit", "Maths", "Units")
         {
-            SetMenuBoxes(new string[] { "SI", "Metric", "Imperial", "US","UK", "Nautical", "Astronomical", "Survey" });
+            SetMenuBoxes(new string[] { "Rhino", "SI", "Metric", "Imperial", "US","UK", "Nautical", "Astronomical", "Survey" });
         }
 
         protected List<Unit> GetUnitType(int index)
@@ -30,6 +30,10 @@ namespace Caterpillar.GH.UnitConverters
             switch (systemNames[index])
             {
                 default:
+                    units = GetUnits(typeof(Caterpillar.Lengths.Custom));
+                    units[0] = GetRhinoUnits(RhUnit.Length);
+                    break;
+                case "SI":
                     units = GetUnits(typeof(Caterpillar.Areas.SI));
                     break;
                 case "Imperial":
@@ -98,6 +102,9 @@ namespace Caterpillar.GH.UnitConverters
             if (!DA.GetData(0, ref inputValue)) return;
             if (!DA.GetData(1, ref inVal)) return;
             if (!DA.GetData(2, ref outVal)) return;
+
+            if (inputIndex == 0) inVal = 0;
+            if (outputIndex == 0) outVal = 0;
 
             DA.SetData(0, ConvertUnits(inputValue));
         }

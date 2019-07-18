@@ -13,6 +13,8 @@ namespace Caterpillar.GH
     public class CaterPillar_Base : GH_Component
     {
 
+        protected enum RhUnit { Length, Area, Volume };
+
         protected ComboBox inputs = new ComboBox();
         protected ComboBox outputs = new ComboBox();
 
@@ -46,6 +48,144 @@ namespace Caterpillar.GH
             UpdateMessage();
         }
 
+        protected Unit GetRhinoUnits(RhUnit unitType)
+        {
+
+            Unit lengthOut = null;
+            Unit areaOut = null;
+            Unit volumeOut = null;
+
+
+            switch (Rhino.RhinoDoc.ActiveDoc.ModelUnitSystem)
+            {
+                default:
+                    lengthOut = Lengths.SI.Meter;
+                    areaOut = Areas.SI.Meter;
+                    volumeOut = Volumes.SI.Meters.Meter;
+                    break;
+                case Rhino.UnitSystem.Angstroms:
+                    lengthOut = Lengths.Metric.Angstrom;
+                    areaOut = Areas.Metric.SquareAngstrom;
+                    volumeOut = Volumes.Metric.CubicAngstrom;
+                    break;
+                case Rhino.UnitSystem.AstronomicalUnits:
+                    lengthOut = Lengths.Astronomical.AstronomicalUnit;
+                    areaOut = Areas.Astronomical.AstronomicalUnit;
+                    volumeOut = Volumes.Astronomical.AstronomicalUnit;
+                    break;
+                case Rhino.UnitSystem.Centimeters:
+                    lengthOut = Lengths.SI.Centimeter;
+                    areaOut = Areas.SI.Centimeter;
+                    volumeOut = Volumes.SI.Meters.Centimeter;
+                    break;
+                case Rhino.UnitSystem.Decimeters:
+                    lengthOut = Lengths.SI.Decimeter;
+                    areaOut = Areas.SI.Decimeter;
+                    volumeOut = Volumes.SI.Meters.Decimeter;
+                    break;
+                case Rhino.UnitSystem.Dekameters:
+                    lengthOut = Lengths.SI.Dekameter;
+                    areaOut = Areas.SI.Dekameter;
+                    volumeOut = Volumes.SI.Meters.Dekameter;
+                    break;
+                case Rhino.UnitSystem.Feet:
+                    lengthOut = Lengths.Imperial.Foot;
+                    areaOut = Areas.Imperial.Foot;
+                    volumeOut = Volumes.Imperial.Foot;
+                    break;
+                case Rhino.UnitSystem.Gigameters:
+                    lengthOut = Lengths.SI.Gigameter;
+                    areaOut = Areas.SI.Gigameter;
+                    volumeOut = Volumes.SI.Meters.Gigameter;
+                    break;
+                case Rhino.UnitSystem.Hectometers:
+                    lengthOut = Lengths.SI.Hectometer;
+                    areaOut = Areas.SI.Hectometer;
+                    volumeOut = Volumes.SI.Meters.Hectometer;
+                    break;
+                case Rhino.UnitSystem.Inches:
+                    lengthOut = Lengths.Imperial.Inch;
+                    areaOut = Areas.Imperial.Inch;
+                    volumeOut = Volumes.Imperial.Inch;
+                    break;
+                case Rhino.UnitSystem.Kilometers:
+                    lengthOut = Lengths.SI.Kilometer;
+                    areaOut = Areas.SI.Kilometer;
+                    volumeOut = Volumes.SI.Meters.Kilometer;
+                    break;
+                case Rhino.UnitSystem.LightYears:
+                    lengthOut = Lengths.Astronomical.Lightyear;
+                    areaOut = Areas.Astronomical.LightYear;
+                    volumeOut = Volumes.Astronomical.LightYear;
+                    break;
+                case Rhino.UnitSystem.Megameters:
+                    lengthOut = Lengths.SI.Megameter;
+                    areaOut = Areas.SI.Megameter;
+                    volumeOut = Volumes.SI.Meters.Megameter;
+                    break;
+                case Rhino.UnitSystem.Microinches:
+                    lengthOut = Lengths.Imperial.Microinch;
+                    areaOut = Areas.Imperial.Microinch;
+                    volumeOut = Volumes.Imperial.Microinch;
+                    break;
+                case Rhino.UnitSystem.Microns:
+                    lengthOut = Lengths.Metric.Micron;
+                    areaOut = Areas.Metric.Micron;
+                    volumeOut = Volumes.Metric.Micron;
+                    break;
+                case Rhino.UnitSystem.Miles:
+                    lengthOut = Lengths.Imperial.Mile;
+                    areaOut = Areas.Imperial.Mile;
+                    volumeOut = Volumes.Imperial.Mile;
+                    break;
+                case Rhino.UnitSystem.Millimeters:
+                    lengthOut = Lengths.SI.Millimeter;
+                    areaOut = Areas.SI.Millimeter;
+                    volumeOut = Volumes.SI.Meters.Millimeter;
+                    break;
+                case Rhino.UnitSystem.Mils:
+                    lengthOut = Lengths.Imperial.Mil;
+                    areaOut = Areas.Imperial.Mil;
+                    volumeOut = Volumes.Imperial.Mil;
+                    break;
+                case Rhino.UnitSystem.NauticalMiles:
+                    lengthOut = Lengths.Nautical.NauticalMile;
+                    areaOut = Areas.Nautical.NauticalMile;
+                    volumeOut = Volumes.Nautical.NauticalMile;
+                    break;
+                case Rhino.UnitSystem.Parsecs:
+                    lengthOut = Lengths.Astronomical.Parsec;
+                    areaOut = Areas.Astronomical.Parsec;
+                    volumeOut = Volumes.Astronomical.Parsec;
+                    break;
+                case Rhino.UnitSystem.PrinterPicas:
+                    lengthOut = Lengths.Typographic.Pica;
+                    areaOut = Areas.Typographic.SquarePica;
+                    volumeOut = Volumes.Typographic.CubicPica;
+                    break;
+                case Rhino.UnitSystem.PrinterPoints:
+                    lengthOut = Lengths.Typographic.Point;
+                    areaOut = Areas.Typographic.SquarePoint;
+                    volumeOut = Volumes.Typographic.CubicPoint;
+                    break;
+                case Rhino.UnitSystem.Yards:
+                    lengthOut = Lengths.Imperial.Yard;
+                    areaOut = Areas.Imperial.Yard;
+                    volumeOut = Volumes.Imperial.Yard;
+                    break;
+            }
+
+            switch(unitType)
+            {
+                default:
+                    return lengthOut;
+                case RhUnit.Area:
+                    return areaOut;
+                case RhUnit.Volume:
+                    return volumeOut;
+            }
+
+        }
 
         /// <summary>
         /// Set Exposure level for the component.
