@@ -18,7 +18,7 @@ Built initially for converting US & UK Imperial units to Metric on architectural
 In response to the common need to share files among multiple team members Caterpillar was initially developed as a safeguard against shared files being opened in rhino scenes where units were different. A common issue of a grasshopper file being developed in a scene set to meters and using a divide by distance component would be opened in a scene set to millimeters. The result of which was often a sever lag if not crash of the file. The Rhino unit and metric conversion were developed to anticipate this issue, by allowing grasshopper to detect rhino’s’ unit, such as millimeters and convert them to the unit for which the file was developed, such as meters. 
 
 ### NOTE
-*Caterpillar is currently an alpha release, as all values available have been preliminarily used but not fully cross checked or validated. Use at your own rist. It is recommended that preliminary conversions are verified from in independent source before use.*
+*Caterpillar is currently an alpha release, as all values available have been preliminarily used but not fully cross-checked or validated. Use at your own risk. It is recommended that preliminary conversions are verified from an independent source before use.*
 
 
 
