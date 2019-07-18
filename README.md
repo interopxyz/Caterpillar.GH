@@ -1,6 +1,8 @@
 # Caterpillar.GH
 Caterpillar plugin for Robert McNeel and Associate's Grasshopper 3d.
 
+Grasshopper users can download the plugin at: https://www.food4rhino.com/app/caterpillar
+
 ## README
 Caterpillar GH is the [Grasshopper 3D](https://www.grasshopper3d.com/) implementation of the [Caterpillar Library](https://github.com/interopxyz/Caterpillar) which allows for the conversion between different systems of measurement. Designed for simplicity of use, the primary conversion all takes place in a single component per unit of measure in which three inputs convert a “value” from a source unit of measure to a target unit of measure resulting in an output from the component whose value has been converted from the specified input system of measurement to the output system. The result is a fast simple conversion between common systems of measurement covering, Angle, Area, Energy, Force, Length, Mass, Pressure, Speed, Temperature, Time, and Volume. The components are added to the Math's tab in the Grasshopper ribbon under the Units Category.
 
