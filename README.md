@@ -12,7 +12,7 @@ Each component has right click options to select systems of measure including SI
 
 Each components default state is set to the current Rhino Document when applicable.
 
-Built primarily for conversion from US & UK Imperial units to Metric in an architectural practice, the component set was expanded to cover a wide array of both historic and sometimes archaic units as well as several additional Nation's traditional units. Not all of the options available in the Caterpillar library are made accessible in the Grasshopper components.
+Built primarily for conversion from US & UK Imperial units to Metric in an architectural practice, the component set was expanded to cover a wide array of both historic and sometimes archaic units as well as several additional Nation's traditional units. Not all of the options available in the [Caterpillar Library](https://github.com/interopxyz/Caterpillar) are made accessible in the Grasshopper components.
 
 
 In response to the common need to share files among multiple team members Caterpillar was initially developed as a safeguard against shared files being opened in rhino scenes where units were different. A common issue of a grasshopper file being developed in a scene set to meters and using a divide by distance component would be opened in a scene set to millimeters. The result of which was often a sever lag if not crash of the file. The Rhino unit and metric conversion were developed to anticipate this issue, by allowing grasshopper to detect rhino’s’ unit, such as millimeters and convert them to the unit for which the file was developed, such as meters. 
