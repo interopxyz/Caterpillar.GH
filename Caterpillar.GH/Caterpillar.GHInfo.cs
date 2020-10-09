@@ -36,6 +36,10 @@ namespace Caterpillar.GH
             return new Guid("ab9be5da-5942-4909-8f30-bf436448e1ff");
         }
     }
+    
+    public override string Version => "1.0.0";
+
+    public override string AssemblyVersion => this.Version;
 
     public override string AuthorName
     {
